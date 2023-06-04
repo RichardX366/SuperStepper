@@ -8,7 +8,7 @@
 // See https://github.com/adafruit/Adafruit_Motor_Shield_V2_Library 
 // for examples that work with Adafruit Motor Shield V2.
 
-#include <AccelStepper.h>
+#include <SuperStepper.h>
 #include <AFMotor.h>
 
 // two stepper motors one on each port
@@ -31,9 +31,9 @@ void backwardstep2() {
   motor2.onestep(BACKWARD, SINGLE);
 }
 
-// Motor shield has two motor ports, now we'll wrap them in an AccelStepper object
-AccelStepper stepper1(forwardstep1, backwardstep1);
-AccelStepper stepper2(forwardstep2, backwardstep2);
+// Motor shield has two motor ports, now we'll wrap them in an SuperStepper object
+SuperStepper stepper1(forwardstep1, backwardstep1);
+SuperStepper stepper2(forwardstep2, backwardstep2);
 
 void setup()
 {  

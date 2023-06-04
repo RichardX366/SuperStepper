@@ -1,13 +1,13 @@
 // AFMotor_ConstantSpeed.pde
 // -*- mode: C++ -*-
 //
-// Shows how to use AccelStepper to control a 3-phase motor, such as a HDD spindle motor
+// Shows how to use SuperStepper to control a 3-phase motor, such as a HDD spindle motor
 // using the Adafruit Motor Shield
 // http://www.ladyada.net/make/mshield/index.html.
-// Create a subclass of AccelStepper which controls the motor  pins via the
+// Create a subclass of SuperStepper which controls the motor  pins via the
 // Motor Shield serial-to-parallel interface
 
-#include <AccelStepper.h>
+#include <SuperStepper.h>
 
 // Arduino pin names for interface to 74HCT595 latch
 // on Adafruit Motor Shield
@@ -26,17 +26,17 @@
 
 
 // The main purpose of this class is to override setOutputPins to work with Adafruit Motor Shield
-class AFMotorShield : public AccelStepper
+class AFMotorShield : public SuperStepper
 {
   public:
-  AFMotorShield(uint8_t interface = AccelStepper::FULL4WIRE, uint8_t pin1 = 2, uint8_t pin2 = 3, uint8_t pin3 = 4, uint8_t pin4 = 5); 
+  AFMotorShield(uint8_t interface = SuperStepper::FULL4WIRE, uint8_t pin1 = 2, uint8_t pin2 = 3, uint8_t pin3 = 4, uint8_t pin4 = 5); 
 
   virtual void   setOutputPins(uint8_t mask);
 };
 
 
 AFMotorShield::AFMotorShield(uint8_t interface, uint8_t pin1, uint8_t pin2, uint8_t pin3, uint8_t pin4)
-    : AccelStepper(interface, pin1, pin2, pin3, pin4) 
+    : SuperStepper(interface, pin1, pin2, pin3, pin4) 
 {
     // Enable motor control serial to parallel latch
     pinMode(MOTORLATCH, OUTPUT);
@@ -59,9 +59,9 @@ AFMotorShield::AFMotorShield(uint8_t interface, uint8_t pin1, uint8_t pin2, uint
 };
     
 // Use the AF Motor Shield serial-to-parallel to set the state of the motor pins
-// Caution: the mapping of AccelStepper pins to AF motor outputs is not
+// Caution: the mapping of SuperStepper pins to AF motor outputs is not
 // obvious:
-// AccelStepper     Motor Shield output
+// SuperStepper     Motor Shield output
 // pin1                M4A
 // pin2                M1A
 // pin3                M2A
@@ -88,7 +88,7 @@ void AFMotorShield::setOutputPins(uint8_t mask)
   digitalWrite(MOTORLATCH, HIGH);
 }
 
-AFMotorShield stepper(AccelStepper::HALF3WIRE, 0, 0, 0, 0); // 3 phase HDD spindle drive
+AFMotorShield stepper(SuperStepper::HALF3WIRE, 0, 0, 0, 0); // 3 phase HDD spindle drive
 
 void setup()
 {  

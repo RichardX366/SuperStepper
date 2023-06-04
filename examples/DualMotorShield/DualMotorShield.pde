@@ -13,7 +13,7 @@
 // Copyright (C) 2014 Mike McCauley
 // $Id:  $
 
-#include <AccelStepper.h>
+#include <SuperStepper.h>
 
 // The X Stepper pins
 #define STEPPER1_DIR_PIN 3
@@ -23,8 +23,8 @@
 #define STEPPER2_STEP_PIN 6
 
 // Define some steppers and the pins the will use
-AccelStepper stepper1(AccelStepper::DRIVER, STEPPER1_STEP_PIN, STEPPER1_DIR_PIN);
-AccelStepper stepper2(AccelStepper::DRIVER, STEPPER2_STEP_PIN, STEPPER2_DIR_PIN);
+SuperStepper stepper1(SuperStepper::DRIVER, STEPPER1_STEP_PIN, STEPPER1_DIR_PIN);
+SuperStepper stepper2(SuperStepper::DRIVER, STEPPER2_STEP_PIN, STEPPER2_DIR_PIN);
 
 void setup()
 {  

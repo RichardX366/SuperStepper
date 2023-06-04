@@ -8,12 +8,12 @@
 // Copyright (C) 2009 Mike McCauley
 // $Id: MultiStepper.pde,v 1.1 2011/01/05 01:51:01 mikem Exp mikem $
 
-#include <AccelStepper.h>
+#include <SuperStepper.h>
 
 // Define some steppers and the pins the will use
-AccelStepper stepper1; // Defaults to AccelStepper::FULL4WIRE (4 pins) on 2, 3, 4, 5
-AccelStepper stepper2(AccelStepper::FULL4WIRE, 6, 7, 8, 9);
-AccelStepper stepper3(AccelStepper::FULL2WIRE, 10, 11);
+SuperStepper stepper1; // Defaults to SuperStepper::FULL4WIRE (4 pins) on 2, 3, 4, 5
+SuperStepper stepper2(SuperStepper::FULL4WIRE, 6, 7, 8, 9);
+SuperStepper stepper3(SuperStepper::FULL2WIRE, 10, 11);
 
 void setup()
 {  

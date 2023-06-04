@@ -6,10 +6,10 @@
 // Copyright (C) 2009 Mike McCauley
 // $Id: Random.pde,v 1.1 2011/01/05 01:51:01 mikem Exp mikem $
 
-#include <AccelStepper.h>
+#include <SuperStepper.h>
 
 // Define a stepper and the pins it will use
-AccelStepper stepper; // Defaults to AccelStepper::FULL4WIRE (4 pins) on 2, 3, 4, 5
+SuperStepper stepper; // Defaults to SuperStepper::FULL4WIRE (4 pins) on 2, 3, 4, 5
 
 void setup()
 {  

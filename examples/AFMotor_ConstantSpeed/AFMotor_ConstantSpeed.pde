@@ -1,7 +1,7 @@
 // AFMotor_ConstantSpeed.pde
 // -*- mode: C++ -*-
 //
-// Shows how to run AccelStepper in the simplest,
+// Shows how to run SuperStepper in the simplest,
 // fixed speed mode with no accelerations
 // Requires the AFMotor library
 // (https://github.com/adafruit/Adafruit-Motor-Shield-library)
@@ -9,7 +9,7 @@
 // See https://github.com/adafruit/Adafruit_Motor_Shield_V2_Library 
 // for examples that work with Adafruit Motor Shield V2.
 
-#include <AccelStepper.h>
+#include <SuperStepper.h>
 #include <AFMotor.h>
 
 AF_Stepper motor1(200, 1);
@@ -23,7 +23,7 @@ void backwardstep() {
   motor1.onestep(BACKWARD, SINGLE);
 }
 
-AccelStepper stepper(forwardstep, backwardstep); // use functions to step
+SuperStepper stepper(forwardstep, backwardstep); // use functions to step
 
 void setup()
 {  
