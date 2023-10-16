@@ -2,6 +2,7 @@
 #define SuperStepper_h
 
 #include <stdlib.h>
+#include <functional>
 #if ARDUINO >= 100
 #include <Arduino.h>
 #else
