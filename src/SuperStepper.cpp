@@ -56,7 +56,7 @@ unsigned long SuperStepper::computeNewSpeed() {
   long distanceTo = distanceToGo();  // +ve is clockwise from curent location
 
   long stepsToStop =
-      (long)((_speed * _speed) / (2.0 * _acceleration));  // Equation 16
+      (long)((_speed * _speed) / (20.0 * _acceleration));  // Equation 16
 
   if (distanceTo == 0 && stepsToStop <= 1) {
     // We are at the target and its time to stop
@@ -98,6 +98,12 @@ unsigned long SuperStepper::computeNewSpeed() {
   if (_n == 0) {
     // First step from stopped
     _cn = _c0;
+    if (_speed > 0.0) {
+      while (1000000.0 / _cn < _speed) {
+        _n++;
+        _cn = _cn - ((2.0 * _cn) / ((4.0 * _n) + 1));
+      }
+    }
     _direction = (distanceTo > 0) ? DIRECTION_CW : DIRECTION_CCW;
   } else {
     // Subsequent step. Works for accel (n is +_ve) and decel (n is -ve).
@@ -134,7 +140,7 @@ boolean SuperStepper::run() {
 
 SuperStepper::SuperStepper(uint8_t interface, uint8_t pin1, uint8_t pin2,
                            uint8_t pin3, uint8_t pin4, bool enable,
-                           std::function<void(int, int)> writePin) {
+                           void (*writePin)(int pin, int value)) {
   _interface = interface;
   _currentPos = 0;
   _targetPos = 0;
@@ -146,11 +152,15 @@ SuperStepper::SuperStepper(uint8_t interface, uint8_t pin1, uint8_t pin2,
   _minPulseWidth = 1;
   _enablePin = 0xff;
   _lastStepTime = 0;
-  // Swap first and last pins
-  _pin[0] = pin4;
   _pin[1] = pin2;
   _pin[2] = pin3;
-  _pin[3] = pin1;
+  if (interface == FULL4WIRE || interface == HALF4WIRE) {
+    _pin[0] = pin4;
+    _pin[3] = pin1;
+  } else {
+    _pin[0] = pin1;
+    _pin[3] = pin4;
+  }
   _enableInverted = false;
   _writePin = writePin;
 
@@ -202,6 +212,12 @@ SuperStepper::SuperStepper(void (*forward)(), void (*backward)()) {
   setMaxSpeed(1);
 }
 
+void SuperStepper::enablePins() {
+  for (int i = 0; i < 4; i++) {
+    if (_pin[i] != -1) pinMode(_pin[i], OUTPUT);
+  }
+}
+
 void SuperStepper::setMaxSpeed(float speed) {
   if (speed < 0.0) speed = -speed;
   if (_maxSpeed != speed) {
@@ -243,6 +259,7 @@ void SuperStepper::setSpeed(float speed) {
     _direction = (speed > 0.0) ? DIRECTION_CW : DIRECTION_CCW;
   }
   _speed = speed;
+  _n = 0;
 }
 
 float SuperStepper::speed() { return _speed; }

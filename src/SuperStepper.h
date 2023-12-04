@@ -2,7 +2,7 @@
 #define SuperStepper_h
 
 #include <stdlib.h>
-#include <functional>
+
 #if ARDUINO >= 100
 #include <Arduino.h>
 #else
@@ -64,6 +64,7 @@
 /// Gregor Christandl reports that with an Arduino Due and a simple test
 /// program, he measured 43163 steps per second using runSpeed(), and 16214
 /// steps per second using run();
+
 class SuperStepper {
  public:
   /// \brief Symbolic names for number of pins.
@@ -114,12 +115,10 @@ class SuperStepper {
   /// to pin 5.
   /// \param[in] enable If this is true (the default), enableOutputs() will be
   /// called to enable the output pins at construction time.
-  SuperStepper(
-      uint8_t interface = SuperStepper::FULL4WIRE, uint8_t pin1 = 2,
-      uint8_t pin2 = 3, uint8_t pin3 = 4, uint8_t pin4 = 5, bool enable = true,
-      std::function<void(int, int)> writePin = [](int pin, int value) {
-        digitalWrite(pin, value);
-      });
+  SuperStepper(uint8_t interface = SuperStepper::FULL4WIRE, uint8_t pin1 = -1,
+               uint8_t pin2 = -1, uint8_t pin3 = -1, uint8_t pin4 = -1,
+               bool enable = true,
+               void (*writePin)(int pin, int value) = &digitalWrite);
 
   /// Alternate Constructor which will call your own functions for forward and
   /// backward steps. You can have multiple simultaneous steppers, all moving at
@@ -131,6 +130,9 @@ class SuperStepper {
   /// forward step \param[in] backward void-returning procedure that will make a
   /// backward step
   SuperStepper(void (*forward)(), void (*backward)());
+
+  /// Sets the pins listed in the constructor to output.
+  void enablePins();
 
   /// Set the target position. The run() function will try to move the motor (at
   /// most one step per call) from the current position to the target position
@@ -402,7 +404,7 @@ class SuperStepper {
 
  private:
   /// Function to set the state of a pin
-  std::function<void(int, int)> _writePin;
+  void (*_writePin)(int pin, int value);
 
   /// Number of pins on the stepper motor. Permits 2 or 4. 2 pins is a
   /// bipolar, and 4 pins is a unipolar.
