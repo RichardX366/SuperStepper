@@ -118,7 +118,7 @@ class SuperStepper {
   SuperStepper(uint8_t interface = SuperStepper::FULL4WIRE, uint8_t pin1 = -1,
                uint8_t pin2 = -1, uint8_t pin3 = -1, uint8_t pin4 = -1,
                bool enable = true,
-               void (*writePin)(int pin, int value) = &digitalWrite);
+               void (*writePin)(pin_size_t pin, int value) = &digitalWrite);
 
   /// Alternate Constructor which will call your own functions for forward and
   /// backward steps. You can have multiple simultaneous steppers, all moving at
@@ -404,7 +404,7 @@ class SuperStepper {
 
  private:
   /// Function to set the state of a pin
-  void (*_writePin)(int pin, int value);
+  void (*_writePin)(pin_size_t pin, int value);
 
   /// Number of pins on the stepper motor. Permits 2 or 4. 2 pins is a
   /// bipolar, and 4 pins is a unipolar.

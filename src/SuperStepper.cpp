@@ -140,7 +140,7 @@ boolean SuperStepper::run() {
 
 SuperStepper::SuperStepper(uint8_t interface, uint8_t pin1, uint8_t pin2,
                            uint8_t pin3, uint8_t pin4, bool enable,
-                           void (*writePin)(int pin, int value)) {
+                           void (*writePin)(pin_size_t pin, int value)) {
   _interface = interface;
   _currentPos = 0;
   _targetPos = 0;
